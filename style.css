@@ -4,11 +4,17 @@
 
 body {
     margin: 0;
+
     min-height: 100vh;
 
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-    background: #f5f5f5;
+    background:
+        #f4f5f7;
+
     color: #202124;
 }
 
@@ -16,121 +22,274 @@ body {
     min-height: 100vh;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    padding: 20px;
+    padding: 30px 15px;
 }
 
-.verification-card {
-    width: 330px;
+.card {
+    width: min(600px, 100%);
 
     background: white;
 
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
+    border: 1px solid #ddd;
 
-    padding: 30px;
+    border-radius: 10px;
 
-    text-align: center;
+    padding: 35px;
 
     box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.12);
+        0 5px 25px rgba(0, 0, 0, .08);
+}
+
+
+/* HEADER */
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-weight: bold;
+
+    color: #555;
+
+    margin-bottom: 25px;
 }
 
 .shield {
-    width: 54px;
-    height: 54px;
-
-    margin: 0 auto 18px;
+    width: 34px;
+    height: 34px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     border-radius: 50%;
 
-    background: #f0f0f0;
+    background: #eee;
 
-    font-size: 28px;
     font-weight: bold;
 }
 
 h1 {
-    margin: 0 0 10px;
+    margin: 0;
 
-    font-size: 24px;
+    font-size: 26px;
 }
 
-.description {
-    margin: 0 0 22px;
-
+.intro {
     color: #666;
 
-    font-size: 14px;
     line-height: 1.5;
+
+    margin-bottom: 30px;
 }
 
-#verifyButton {
-    width: 100%;
 
-    min-height: 62px;
+/* STEPS */
 
+.step {
     display: flex;
-    align-items: center;
 
-    gap: 14px;
+    gap: 18px;
 
-    padding: 14px;
+    padding: 22px 0;
 
-    border: 1px solid #c8c8c8;
-    border-radius: 4px;
-
-    background: #fafafa;
-
-    color: #222;
-
-    font-size: 15px;
-
-    cursor: pointer;
-
-    text-align: left;
+    border-top: 1px solid #eee;
 }
 
-#verifyButton:hover {
-    background: #f1f1f1;
-}
-
-#verifyButton:disabled {
-    cursor: wait;
-    opacity: 0.7;
-}
-
-.checkbox {
-    width: 25px;
-    height: 25px;
+.step-number {
+    width: 32px;
+    height: 32px;
 
     flex-shrink: 0;
 
-    border: 2px solid #777;
-    border-radius: 3px;
+    display: flex;
 
-    background: white;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #202124;
+
+    color: white;
+
+    font-weight: bold;
 }
 
-.status {
-    min-height: 20px;
+.step-content {
+    flex: 1;
+}
 
-    margin: 15px 0 0;
+.step-content h2 {
+    margin: 3px 0 8px;
+
+    font-size: 17px;
+}
+
+.step-content p {
+    margin: 0;
+
+    color: #777;
+
+    line-height: 1.5;
+
+    font-size: 14px;
+}
+
+
+/* CODE */
+
+.code-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 14px;
+
+    padding: 10px;
+
+    background: #f5f5f5;
+
+    border: 1px solid #ddd;
+
+    border-radius: 6px;
+}
+
+.code-box code {
+    flex: 1;
+
+    padding-left: 8px;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 15px;
+}
+
+#copyButton {
+    border: none;
+
+    background: #222;
+
+    color: white;
+
+    padding: 10px 14px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+#copyButton:hover {
+    background: #444;
+}
+
+#copyStatus,
+#verifyStatus {
+    margin-top: 10px;
 
     font-size: 13px;
+
+    color: #555;
 }
 
-.demo-label {
-    margin-top: 20px;
 
-    color: #999;
+/* KEYBOARD KEYS */
 
-    font-size: 10px;
-    letter-spacing: 1px;
+kbd {
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    background: #eee;
+
+    border: 1px solid #ccc;
+
+    border-bottom-width: 2px;
+
+    border-radius: 4px;
+
+    font-family: monospace;
+
+    font-size: 14px;
+}
+
+
+/* VERIFY */
+
+.verify {
+    margin-top: 12px;
+
+    padding: 12px 25px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #222;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.verify:hover {
+    background: #444;
+}
+
+
+/* DEMO LABEL */
+
+.demo-warning {
+    margin-top: 25px;
+
+    padding: 12px;
+
+    border-radius: 6px;
+
+    background: #f5f5f5;
+
+    color: #888;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+    .card {
+        padding: 25px 20px;
+    }
+
+    .code-box {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    #copyButton {
+        width: 100%;
+    }
+
 }
