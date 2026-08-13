@@ -1,32 +1,71 @@
-const copyButton =
-    document.getElementById("copyButton");
+const copyButton = document.getElementById("copyButton");
+const copyStatus = document.getElementById("copyStatus");
 
-const copyStatus =
-    document.getElementById("copyStatus");
+const verifyButton = document.getElementById("verifyButton");
+const verifyStatus = document.getElementById("verifyStatus");
 
-const verifyButton =
-    document.getElementById("verifyButton");
-
-const verifyStatus =
-    document.getElementById("verifyStatus");
-
-
-/*
- * STEP 1
- * Copy harmless demo text.
- */
 
 copyButton.addEventListener("click", async () => {
 
+    const text = "Hello!";
+
     try {
 
-        await navigator.clipboard.writeText("Hello!");
+        /*
+         * Modern HTTPS clipboard API
+         */
+
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
+
+            await navigator.clipboard.writeText(text);
+
+        } else {
+
+            /*
+             * Legacy fallback
+             */
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value = text;
+
+            textarea.setAttribute(
+                "readonly",
+                ""
+            );
+
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            textarea.style.top = "0";
+
+            document.body.appendChild(textarea);
+
+            textarea.focus();
+            textarea.select();
+
+            const copied =
+                document.execCommand("copy");
+
+            document.body.removeChild(textarea);
+
+            if (!copied) {
+                throw new Error(
+                    "Fallback copy failed"
+                );
+            }
+        }
+
 
         copyButton.textContent =
             "Copied ✓";
 
         copyStatus.textContent =
-            "CAPTCHA code copied to your clipboard.";
+            'Copied "Hello!" to your clipboard.';
+
 
         setTimeout(() => {
 
@@ -35,22 +74,23 @@ copyButton.addEventListener("click", async () => {
 
         }, 2000);
 
+
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Clipboard error:",
+            error
+        );
 
         copyStatus.textContent =
-            "Clipboard access was blocked by your browser.";
+            "Copy failed. Check your browser's clipboard permissions.";
 
     }
 
 });
 
 
-/*
- * STEP 4
- * Safe demo verification.
- */
+/* Safe demo verification */
 
 verifyButton.addEventListener("click", () => {
 
