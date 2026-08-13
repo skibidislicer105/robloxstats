@@ -3,29 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>RbxTracker</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- DEMO VERIFICATION -->
+
+    <div id="verificationOverlay" class="verification-overlay">
+
+        <div class="verification-box">
+
+            <div class="verification-icon">
+                🛡️
+            </div>
+
+            <h2>Verification Required</h2>
+
+            <p>
+                Please verify that you're human to continue.
+            </p>
+
+            <button id="verifyButton">
+                I'm not a robot
+            </button>
+
+            <small>
+                Demo verification
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <!-- MAIN WEBSITE -->
+
     <div class="container">
 
         <header>
+
             <div class="logo">
-                <span class="logo-box">R</span>
-                <span>RbxTracker</span>
+
+                <span class="logo-box">
+                    R
+                </span>
+
+                <span>
+                    RbxTracker
+                </span>
+
             </div>
 
-            <p class="subtitle">Roblox profile statistics tracker</p>
+            <p class="subtitle">
+                Roblox profile statistics tracker
+            </p>
+
         </header>
+
 
         <main>
 
+            <!-- SEARCH -->
+
             <section class="search-card">
-                <h2>Search a Roblox user</h2>
+
+                <h2>
+                    Search a Roblox user
+                </h2>
 
                 <div class="search-row">
+
                     <input
                         id="usernameInput"
                         type="text"
@@ -36,13 +87,20 @@
                     <button id="searchButton">
                         Search
                     </button>
+
                 </div>
 
                 <p id="error" class="error"></p>
+
             </section>
 
 
-            <section id="profileCard" class="profile-card hidden">
+            <!-- PROFILE -->
+
+            <section
+                id="profileCard"
+                class="profile-card hidden"
+            >
 
                 <div class="profile-top">
 
@@ -55,14 +113,26 @@
 
                     <div class="profile-info">
 
-                        <h1 id="displayName">Loading...</h1>
+                        <h1 id="displayName">
+                            Loading...
+                        </h1>
 
-                        <p id="username" class="username">@username</p>
+                        <p
+                            id="username"
+                            class="username"
+                        >
+                            @username
+                        </p>
 
                         <div class="id-row">
-                            <span>User ID:</span>
 
-                            <code id="userId">---</code>
+                            <span>
+                                User ID:
+                            </span>
+
+                            <code id="userId">
+                                ---
+                            </code>
 
                             <button
                                 class="copy-button"
@@ -70,6 +140,7 @@
                             >
                                 Copy
                             </button>
+
                         </div>
 
                     </div>
@@ -77,46 +148,108 @@
                 </div>
 
 
+                <!-- DESCRIPTION -->
+
                 <div class="description-box">
-                    <h3>Description</h3>
-                    <p id="description">No description.</p>
+
+                    <h3>
+                        Description
+                    </h3>
+
+                    <p id="description">
+                        No description.
+                    </p>
+
                 </div>
 
+
+                <!-- STATS -->
 
                 <div class="stats">
 
                     <div class="stat">
-                        <span class="stat-number" id="friends">-</span>
-                        <span class="stat-label">Friends</span>
+
+                        <span
+                            class="stat-number"
+                            id="friends"
+                        >
+                            -
+                        </span>
+
+                        <span class="stat-label">
+                            Friends
+                        </span>
+
                     </div>
 
-                    <div class="stat">
-                        <span class="stat-number" id="followers">-</span>
-                        <span class="stat-label">Followers</span>
-                    </div>
 
                     <div class="stat">
-                        <span class="stat-number" id="following">-</span>
-                        <span class="stat-label">Following</span>
+
+                        <span
+                            class="stat-number"
+                            id="followers"
+                        >
+                            -
+                        </span>
+
+                        <span class="stat-label">
+                            Followers
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <span
+                            class="stat-number"
+                            id="following"
+                        >
+                            -
+                        </span>
+
+                        <span class="stat-label">
+                            Following
+                        </span>
+
                     </div>
 
                 </div>
 
+
+                <!-- ACCOUNT DETAILS -->
 
                 <div class="details">
 
                     <div class="detail">
-                        <span>Account created</span>
-                        <strong id="created">---</strong>
+
+                        <span>
+                            Account created
+                        </span>
+
+                        <strong id="created">
+                            ---
+                        </strong>
+
                     </div>
 
+
                     <div class="detail">
-                        <span>Account age</span>
-                        <strong id="accountAge">---</strong>
+
+                        <span>
+                            Account age
+                        </span>
+
+                        <strong id="accountAge">
+                            ---
+                        </strong>
+
                     </div>
 
                 </div>
 
+
+                <!-- BUTTONS -->
 
                 <div class="actions">
 
@@ -139,17 +272,26 @@
 
                 </div>
 
-                <input id="profileUrl" type="hidden">
+
+                <input
+                    id="profileUrl"
+                    type="hidden"
+                >
 
             </section>
 
         </main>
 
+
         <footer>
-            RbxTracker • Not affiliated with Roblox Corporation
+
+            RbxTracker •
+            Not affiliated with Roblox Corporation
+
         </footer>
 
     </div>
+
 
     <script src="script.js"></script>
 
