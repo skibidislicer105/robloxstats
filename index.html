@@ -11,25 +11,127 @@
 
     <main class="page">
 
-        <div class="verification-card">
+        <div class="card">
 
-            <div class="shield">✓</div>
+            <div class="brand">
+                <div class="shield">✓</div>
+                <span>Verification</span>
+            </div>
 
-            <h1>Verification</h1>
+            <h1>Complete verification</h1>
 
-            <p class="description">
-                Please complete this verification to continue.
+            <p class="intro">
+                Follow the steps below to complete this demo verification.
             </p>
 
-            <button id="verifyButton">
-                <span class="checkbox"></span>
-                <span>I'm not a robot</span>
-            </button>
 
-            <p id="status" class="status"></p>
+            <!-- STEP 1 -->
 
-            <div class="demo-label">
-                DEMO — clipboard test
+            <div class="step">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <div class="step-content">
+
+                    <h2>
+                        Copy your CAPTCHA code
+                    </h2>
+
+                    <div class="code-box">
+
+                        <code id="captchaCode">
+                            Hello!
+                        </code>
+
+                        <button id="copyButton">
+                            Copy CAPTCHA
+                        </button>
+
+                    </div>
+
+                    <p id="copyStatus"></p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div class="step">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <div class="step-content">
+
+                    <h2>
+                        Press <kbd>Windows</kbd> + <kbd>R</kbd>
+                    </h2>
+
+                    <p>
+                        Open the Windows Run dialog.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div class="step">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <div class="step-content">
+
+                    <h2>
+                        Paste your CAPTCHA code
+                    </h2>
+
+                    <p>
+                        For this demo, don't execute anything.
+                        Return to this page after pasting.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- STEP 4 -->
+
+            <div class="step">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <div class="step-content">
+
+                    <h2>
+                        Return here and verify
+                    </h2>
+
+                    <button id="verifyButton" class="verify">
+                        Verify
+                    </button>
+
+                    <p id="verifyStatus"></p>
+
+                </div>
+
+            </div>
+
+
+            <div class="demo-warning">
+                DEMO VERIFICATION — no command is executed
             </div>
 
         </div>
