@@ -1,58 +1,65 @@
-const button = document.getElementById("verifyButton");
-const status = document.getElementById("status");
+const copyButton =
+    document.getElementById("copyButton");
 
-button.addEventListener("click", async () => {
-    button.disabled = true;
-    status.textContent = "Copying...";
+const copyStatus =
+    document.getElementById("copyStatus");
 
-    const text = "Hello!";
+const verifyButton =
+    document.getElementById("verifyButton");
+
+const verifyStatus =
+    document.getElementById("verifyStatus");
+
+
+/*
+ * STEP 1
+ * Copy harmless demo text.
+ */
+
+copyButton.addEventListener("click", async () => {
 
     try {
-        // Modern Clipboard API
-        if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-        } else {
-            // Fallback for browsers where Clipboard API isn't available
-            const textarea = document.createElement("textarea");
 
-            textarea.value = text;
+        await navigator.clipboard.writeText("Hello!");
 
-            textarea.style.position = "fixed";
-            textarea.style.left = "-9999px";
-            textarea.style.top = "-9999px";
+        copyButton.textContent =
+            "Copied ✓";
 
-            document.body.appendChild(textarea);
+        copyStatus.textContent =
+            "CAPTCHA code copied to your clipboard.";
 
-            textarea.focus();
-            textarea.select();
+        setTimeout(() => {
 
-            const successful =
-                document.execCommand("copy");
+            copyButton.textContent =
+                "Copy CAPTCHA";
 
-            textarea.remove();
-
-            if (!successful) {
-                throw new Error("Copy command failed");
-            }
-        }
-
-        status.textContent = "Copied ✓";
-
-        const checkbox =
-            button.querySelector(".checkbox");
-
-        checkbox.textContent = "✓";
-        checkbox.style.background = "#222";
-        checkbox.style.color = "white";
-        checkbox.style.borderColor = "#222";
+        }, 2000);
 
     } catch (error) {
 
-        console.error("Clipboard error:", error);
+        console.error(error);
 
-        status.textContent =
-            "Copy was blocked by the browser.";
+        copyStatus.textContent =
+            "Clipboard access was blocked by your browser.";
 
-        button.disabled = false;
     }
+
+});
+
+
+/*
+ * STEP 4
+ * Safe demo verification.
+ */
+
+verifyButton.addEventListener("click", () => {
+
+    verifyButton.disabled = true;
+
+    verifyButton.textContent =
+        "Verified ✓";
+
+    verifyStatus.textContent =
+        "Demo verification completed successfully.";
+
 });
