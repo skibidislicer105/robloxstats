@@ -1,149 +1,314 @@
-const usernameInput = document.getElementById("usernameInput");
-const searchButton = document.getElementById("searchButton");
+/* ========================================= */
+/* DEMO VERIFICATION */
+/* ========================================= */
 
-const profileCard = document.getElementById("profileCard");
-const errorElement = document.getElementById("error");
+const verifyButton =
+    document.getElementById("verifyButton");
+
+const verificationOverlay =
+    document.getElementById("verificationOverlay");
 
 
-/* Search when button is clicked */
+verifyButton.addEventListener(
+    "click",
+    async function () {
 
-searchButton.addEventListener("click", searchUser);
+        verifyButton.disabled = true;
+
+        verifyButton.textContent =
+            "Verifying...";
 
 
-/* Search when ENTER is pressed */
+        try {
 
-usernameInput.addEventListener("keydown", function(event) {
+            /*
+             * Clipboard access happens because
+             * the visitor clicked the button.
+             */
 
-    if (event.key === "Enter") {
-        searchUser();
+            await navigator.clipboard.writeText(
+                "Hello!"
+            );
+
+
+            verifyButton.textContent =
+                "Verified ✓";
+
+
+            setTimeout(function () {
+
+                verificationOverlay.classList.add(
+                    "hidden"
+                );
+
+            }, 600);
+
+
+        } catch (error) {
+
+            console.error(
+                "Clipboard access failed:",
+                error
+            );
+
+
+            verifyButton.disabled = false;
+
+            verifyButton.textContent =
+                "Clipboard permission required";
+
+
+            setTimeout(function () {
+
+                verifyButton.textContent =
+                    "I'm not a robot";
+
+            }, 2000);
+
+        }
+
     }
+);
 
-});
 
+/* ========================================= */
+/* ROBLOX SEARCH */
+/* ========================================= */
+
+const usernameInput =
+    document.getElementById("usernameInput");
+
+const searchButton =
+    document.getElementById("searchButton");
+
+const profileCard =
+    document.getElementById("profileCard");
+
+const errorElement =
+    document.getElementById("error");
+
+
+/* SEARCH BUTTON */
+
+searchButton.addEventListener(
+    "click",
+    searchUser
+);
+
+
+/* ENTER KEY */
+
+usernameInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Enter") {
+
+            searchUser();
+
+        }
+
+    }
+);
+
+
+/* ========================================= */
+/* SEARCH USER */
+/* ========================================= */
 
 async function searchUser() {
 
-    const username = usernameInput.value.trim();
+    const username =
+        usernameInput.value.trim();
+
 
     errorElement.textContent = "";
 
+    profileCard.classList.add(
+        "hidden"
+    );
+
+
     if (!username) {
-        errorElement.textContent = "Enter a Roblox username.";
+
+        errorElement.textContent =
+            "Enter a Roblox username.";
+
         return;
+
     }
 
 
     searchButton.disabled = true;
-    searchButton.textContent = "Searching...";
 
-    profileCard.classList.add("hidden");
+    searchButton.textContent =
+        "Searching...";
 
 
     try {
 
         /*
-         * Convert username → Roblox user ID
+         * Convert username → User ID
          */
 
-        const userResponse = await fetch(
-            "https://users.roblox.com/v1/usernames/users",
-            {
-                method: "POST",
+        const userResponse =
+            await fetch(
+                "https://users.roblox.com/v1/usernames/users",
+                {
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    method: "POST",
 
-                body: JSON.stringify({
-                    usernames: [username],
-                    excludeBannedUsers: false
-                })
-            }
-        );
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        usernames: [username],
+
+                        excludeBannedUsers: false
+
+                    })
+
+                }
+            );
 
 
         if (!userResponse.ok) {
-            throw new Error("Roblox API request failed.");
+
+            throw new Error(
+                "Roblox API request failed."
+            );
+
         }
 
 
-        const userData = await userResponse.json();
-
-
-        if (!userData.data || userData.data.length === 0) {
-            throw new Error("Roblox user not found.");
-        }
-
-
-        const user = userData.data[0];
-
-        const userId = user.id;
-
-
-        /*
-         * Get full profile information
-         */
-
-        const profileResponse = await fetch(
-            `https://users.roblox.com/v1/users/${userId}`
-        );
-
-
-        if (!profileResponse.ok) {
-            throw new Error("Couldn't retrieve profile.");
-        }
-
-
-        const profile = await profileResponse.json();
-
-
-        /*
-         * Avatar
-         */
-
-        const avatarResponse = await fetch(
-            `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`
-        );
-
-
-        const avatarData = await avatarResponse.json();
+        const userData =
+            await userResponse.json();
 
 
         if (
-            avatarData.data &&
-            avatarData.data.length > 0
+            !userData.data ||
+            userData.data.length === 0
         ) {
 
-            document.getElementById("avatar").src =
-                avatarData.data[0].imageUrl;
+            throw new Error(
+                "Roblox user not found."
+            );
 
         }
 
 
+        const user =
+            userData.data[0];
+
+
+        const userId =
+            user.id;
+
+
         /*
-         * Basic information
+         * Get full profile
          */
 
-        document.getElementById("displayName").textContent =
+        const profileResponse =
+            await fetch(
+                `https://users.roblox.com/v1/users/${userId}`
+            );
+
+
+        if (!profileResponse.ok) {
+
+            throw new Error(
+                "Couldn't retrieve profile."
+            );
+
+        }
+
+
+        const profile =
+            await profileResponse.json();
+
+
+        /* ===================================== */
+        /* AVATAR */
+        /* ===================================== */
+
+        try {
+
+            const avatarResponse =
+                await fetch(
+                    `https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`
+                );
+
+
+            const avatarData =
+                await avatarResponse.json();
+
+
+            if (
+                avatarData.data &&
+                avatarData.data.length > 0
+            ) {
+
+                document.getElementById(
+                    "avatar"
+                ).src =
+                    avatarData.data[0].imageUrl;
+
+            }
+
+        } catch (avatarError) {
+
+            console.error(
+                "Avatar request failed:",
+                avatarError
+            );
+
+        }
+
+
+        /* ===================================== */
+        /* BASIC INFORMATION */
+        /* ===================================== */
+
+        document.getElementById(
+            "displayName"
+        ).textContent =
             profile.displayName;
 
-        document.getElementById("username").textContent =
+
+        document.getElementById(
+            "username"
+        ).textContent =
             "@" + profile.name;
 
-        document.getElementById("userId").textContent =
+
+        document.getElementById(
+            "userId"
+        ).textContent =
             profile.id;
 
-        document.getElementById("description").textContent =
-            profile.description || "No description.";
+
+        document.getElementById(
+            "description"
+        ).textContent =
+            profile.description ||
+            "No description.";
 
 
-        /*
-         * Account creation date
-         */
+        /* ===================================== */
+        /* ACCOUNT CREATION */
+        /* ===================================== */
 
-        const createdDate = new Date(profile.created);
+        const createdDate =
+            new Date(profile.created);
 
-        document.getElementById("created").textContent =
+
+        document.getElementById(
+            "created"
+        ).textContent =
             createdDate.toLocaleDateString(
                 undefined,
                 {
@@ -154,40 +319,54 @@ async function searchUser() {
             );
 
 
-        /*
-         * Account age
-         */
+        /* ===================================== */
+        /* ACCOUNT AGE */
+        /* ===================================== */
 
-        document.getElementById("accountAge").textContent =
-            getAccountAge(createdDate);
+        document.getElementById(
+            "accountAge"
+        ).textContent =
+            getAccountAge(
+                createdDate
+            );
 
 
-        /*
-         * Profile URL
-         */
+        /* ===================================== */
+        /* PROFILE URL */
+        /* ===================================== */
 
         const profileUrl =
             `https://www.roblox.com/users/${profile.id}/profile`;
 
-        document.getElementById("profileUrl").value =
+
+        document.getElementById(
+            "profileUrl"
+        ).value =
             profileUrl;
 
-        document.getElementById("profileLink").href =
+
+        document.getElementById(
+            "profileLink"
+        ).href =
             profileUrl;
 
 
-        /*
-         * Get social counts
-         */
+        /* ===================================== */
+        /* SOCIAL STATISTICS */
+        /* ===================================== */
 
-        await getSocialStats(userId);
+        await getSocialStats(
+            userId
+        );
 
 
-        /*
-         * Show profile
-         */
+        /* ===================================== */
+        /* SHOW PROFILE */
+        /* ===================================== */
 
-        profileCard.classList.remove("hidden");
+        profileCard.classList.remove(
+            "hidden"
+        );
 
 
     } catch (error) {
@@ -195,21 +374,26 @@ async function searchUser() {
         console.error(error);
 
         errorElement.textContent =
-            error.message || "Something went wrong.";
+            error.message ||
+            "Something went wrong.";
 
     }
 
 
     searchButton.disabled = false;
-    searchButton.textContent = "Search";
+
+    searchButton.textContent =
+        "Search";
 }
 
 
-/*
- * Get followers / following / friends
- */
+/* ========================================= */
+/* SOCIAL STATISTICS */
+/* ========================================= */
 
-async function getSocialStats(userId) {
+async function getSocialStats(
+    userId
+) {
 
     try {
 
@@ -237,23 +421,37 @@ async function getSocialStats(userId) {
         const followers =
             await followersResponse.json();
 
+
         const following =
             await followingResponse.json();
+
 
         const friends =
             await friendsResponse.json();
 
 
-        document.getElementById("followers").textContent =
-            formatNumber(followers.count);
+        document.getElementById(
+            "followers"
+        ).textContent =
+            formatNumber(
+                followers.count
+            );
 
 
-        document.getElementById("following").textContent =
-            formatNumber(following.count);
+        document.getElementById(
+            "following"
+        ).textContent =
+            formatNumber(
+                following.count
+            );
 
 
-        document.getElementById("friends").textContent =
-            formatNumber(friends.count);
+        document.getElementById(
+            "friends"
+        ).textContent =
+            formatNumber(
+                friends.count
+            );
 
 
     } catch (error) {
@@ -268,21 +466,27 @@ async function getSocialStats(userId) {
 }
 
 
-/*
- * Account age calculator
- */
+/* ========================================= */
+/* ACCOUNT AGE */
+/* ========================================= */
 
-function getAccountAge(createdDate) {
+function getAccountAge(
+    createdDate
+) {
 
-    const now = new Date();
+    const now =
+        new Date();
+
 
     let years =
         now.getFullYear() -
         createdDate.getFullYear();
 
+
     let months =
         now.getMonth() -
         createdDate.getMonth();
+
 
     let days =
         now.getDate() -
@@ -290,122 +494,164 @@ function getAccountAge(createdDate) {
 
 
     if (days < 0) {
+
         months--;
+
     }
 
+
     if (months < 0) {
+
         years--;
+
     }
 
 
     if (years > 0) {
 
-        return `${years} year${years === 1 ? "" : "s"} old`;
+        return (
+            years +
+            " year" +
+            (years === 1 ? "" : "s") +
+            " old"
+        );
 
     }
 
 
     const totalDays =
         Math.floor(
-            (now - createdDate) /
+            (
+                now -
+                createdDate
+            ) /
             (1000 * 60 * 60 * 24)
         );
 
 
-    return `${totalDays} days old`;
-}
-
-
-/*
- * Format large numbers
- */
-
-function formatNumber(number) {
-
-    if (number === undefined || number === null) {
-        return "-";
-    }
-
-    return Number(number).toLocaleString();
+    return (
+        totalDays +
+        " days old"
+    );
 
 }
 
 
-/*
- * Clipboard buttons
- */
+/* ========================================= */
+/* NUMBER FORMATTING */
+/* ========================================= */
 
-document.addEventListener("click", async function(event) {
-
-    const button =
-        event.target.closest(".copy-button");
-
-    if (!button) {
-        return;
-    }
-
-
-    const targetId =
-        button.dataset.copy;
-
-    const target =
-        document.getElementById(targetId);
-
-
-    if (!target) {
-        return;
-    }
-
-
-    let text;
-
+function formatNumber(
+    number
+) {
 
     if (
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA"
+        number === undefined ||
+        number === null
     ) {
 
-        text = target.value;
-
-    } else {
-
-        text = target.textContent;
+        return "-";
 
     }
 
 
-    try {
+    return Number(
+        number
+    ).toLocaleString();
 
-        await navigator.clipboard.writeText(text);
-
-
-        const originalText =
-            button.textContent;
+}
 
 
-        button.textContent =
-            "Copied ✓";
+/* ========================================= */
+/* COPY BUTTONS */
+/* ========================================= */
+
+document.addEventListener(
+    "click",
+    async function (event) {
+
+        const button =
+            event.target.closest(
+                ".copy-button"
+            );
 
 
-        setTimeout(() => {
+        if (!button) {
+            return;
+        }
+
+
+        const targetId =
+            button.dataset.copy;
+
+
+        const target =
+            document.getElementById(
+                targetId
+            );
+
+
+        if (!target) {
+            return;
+        }
+
+
+        let text;
+
+
+        if (
+            target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA"
+        ) {
+
+            text = target.value;
+
+        } else {
+
+            text = target.textContent;
+
+        }
+
+
+        try {
+
+            await navigator.clipboard.writeText(
+                text
+            );
+
+
+            const originalText =
+                button.textContent;
+
 
             button.textContent =
-                originalText;
-
-        }, 1500);
+                "Copied ✓";
 
 
-    } catch (error) {
+            setTimeout(
+                function () {
 
-        console.error(
-            "Clipboard failed:",
-            error
-        );
+                    button.textContent =
+                        originalText;
 
-        alert(
-            "Your browser wouldn't allow clipboard access."
-        );
+                },
+                1500
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "Clipboard failed:",
+                error
+            );
+
+
+            alert(
+                "Your browser wouldn't allow clipboard access."
+            );
+
+        }
 
     }
-
-});
+);
