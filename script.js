@@ -1,8 +1,8 @@
-const copyButton = document.getElementById("copyButton");
-const copyStatus = document.getElementById("copyStatus");
+const copyButton =
+    document.getElementById("copyButton");
 
-const verifyButton = document.getElementById("verifyButton");
-const verifyStatus = document.getElementById("verifyStatus");
+const copyStatus =
+    document.getElementById("copyStatus");
 
 
 copyButton.addEventListener("click", async () => {
@@ -53,10 +53,13 @@ copyButton.addEventListener("click", async () => {
             document.body.removeChild(textarea);
 
             if (!copied) {
+
                 throw new Error(
                     "Fallback copy failed"
                 );
+
             }
+
         }
 
 
@@ -86,20 +89,5 @@ copyButton.addEventListener("click", async () => {
             "Copy failed. Check your browser's clipboard permissions.";
 
     }
-
-});
-
-
-/* Safe demo verification */
-
-verifyButton.addEventListener("click", () => {
-
-    verifyButton.disabled = true;
-
-    verifyButton.textContent =
-        "Verified ✓";
-
-    verifyStatus.textContent =
-        "Demo verification completed successfully.";
 
 });
