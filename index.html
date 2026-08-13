@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RbxTracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <div class="logo">
+                <span class="logo-box">R</span>
+                <span>RbxTracker</span>
+            </div>
+
+            <p class="subtitle">Roblox profile statistics tracker</p>
+        </header>
+
+        <main>
+
+            <section class="search-card">
+                <h2>Search a Roblox user</h2>
+
+                <div class="search-row">
+                    <input
+                        id="usernameInput"
+                        type="text"
+                        placeholder="Enter Roblox username..."
+                        autocomplete="off"
+                    >
+
+                    <button id="searchButton">
+                        Search
+                    </button>
+                </div>
+
+                <p id="error" class="error"></p>
+            </section>
+
+
+            <section id="profileCard" class="profile-card hidden">
+
+                <div class="profile-top">
+
+                    <img
+                        id="avatar"
+                        class="avatar"
+                        src=""
+                        alt="Roblox avatar"
+                    >
+
+                    <div class="profile-info">
+
+                        <h1 id="displayName">Loading...</h1>
+
+                        <p id="username" class="username">@username</p>
+
+                        <div class="id-row">
+                            <span>User ID:</span>
+
+                            <code id="userId">---</code>
+
+                            <button
+                                class="copy-button"
+                                data-copy="userId"
+                            >
+                                Copy
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="description-box">
+                    <h3>Description</h3>
+                    <p id="description">No description.</p>
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <span class="stat-number" id="friends">-</span>
+                        <span class="stat-label">Friends</span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-number" id="followers">-</span>
+                        <span class="stat-label">Followers</span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="stat-number" id="following">-</span>
+                        <span class="stat-label">Following</span>
+                    </div>
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="detail">
+                        <span>Account created</span>
+                        <strong id="created">---</strong>
+                    </div>
+
+                    <div class="detail">
+                        <span>Account age</span>
+                        <strong id="accountAge">---</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        class="action-button copy-button"
+                        data-copy="profileUrl"
+                    >
+                        📋 Copy Profile URL
+                    </button>
+
+                    <a
+                        id="profileLink"
+                        class="action-button"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        🔗 Open Roblox Profile
+                    </a>
+
+                </div>
+
+                <input id="profileUrl" type="hidden">
+
+            </section>
+
+        </main>
+
+        <footer>
+            RbxTracker • Not affiliated with Roblox Corporation
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
